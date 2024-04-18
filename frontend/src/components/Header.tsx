@@ -1,10 +1,11 @@
 import { ModeToggle } from "@/components/ui/ModeToggle.tsx";
 import Container from "./ui/Container.tsx";
 import { Link } from "react-router-dom";
+import ProfileButton from "./ui/ProfileButton.tsx";
 
 export default function Header() {
   return (
-    <header className="border-b px-4 py-3 sm:flex sm:justify-between">
+    <header className="border-b px-6 py-3 sm:flex sm:justify-between">
       <Container>
         <div className="relative flex h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
@@ -13,8 +14,9 @@ export default function Header() {
             </Link>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <ModeToggle />
+            <ProfileButton />
           </div>
         </div>
       </Container>
