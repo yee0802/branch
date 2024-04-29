@@ -7,6 +7,13 @@ export const getAllPostsDb = async () =>
       title: true,
       content: true,
       image: true,
-      author: true,
+      author: {
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          username: true,
+        },
+      },
     },
   });
