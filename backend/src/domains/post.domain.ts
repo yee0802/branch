@@ -7,6 +7,7 @@ export const getAllPostsDb = async () =>
       title: true,
       content: true,
       image: true,
+      createdAt: true,
       author: {
         select: {
           id: true,
