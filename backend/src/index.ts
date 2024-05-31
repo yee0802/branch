@@ -18,7 +18,7 @@ app.use("/api/posts", postRouter);
 import userRouter from "./routes/user.route";
 app.use("/api/user", userRouter);
 
-app.get("*", (req, res) => {
+app.all("*", (req, res) => {
   res.status(404).send({
     status: "fail",
     data: {
