@@ -15,6 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 import postRouter from "./routes/post.route";
 app.use("/api/posts", postRouter);
 
+import userRouter from "./routes/user.route";
+app.use("/api/user", userRouter);
+
 app.get("*", (req, res) => {
   res.status(404).send({
     status: "fail",
