@@ -8,7 +8,7 @@ export default function Home() {
       <Header />
       <Container>
         <div className="space-y-10">
-          <div className="flex gap-y-8 py-4 sm:py-6 lg:py-8">
+          <div className="flex justify-center gap-y-8 py-4 sm:py-6 lg:py-8">
             <PostList />
           </div>
         </div>
