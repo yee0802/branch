@@ -1,4 +1,4 @@
-import { getAllPosts } from "@/service/apiClient";
+import { getAllPostsAPI } from "@/service/apiClient";
 import { useEffect, useState } from "react";
 import PostCard from "./ui/PostCard";
 import { Post } from "@/interfaces/Post";
@@ -7,7 +7,7 @@ const PostList = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    getAllPosts()
+    getAllPostsAPI()
       .then((res) => {
         setPosts(res.posts);
       })
