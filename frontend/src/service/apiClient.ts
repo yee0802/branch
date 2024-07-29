@@ -26,3 +26,13 @@ export const registerAPI = async (
     handleError(err);
   }
 };
+
+export const loginAPI = async (email: string, password: string) => {
+  try {
+    const data = await api.post("/user/login", { email, password });
+
+    return data;
+  } catch (err) {
+    handleError(err);
+  }
+};
