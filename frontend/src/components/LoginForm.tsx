@@ -10,7 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "./ui/form";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { Form } from "@/components/ui/form";
