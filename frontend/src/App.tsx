@@ -5,6 +5,7 @@ import PageNotFound from "./components/PageNotFound";
 import { AuthProvider } from "./context/auth";
 import { Toaster } from "@/components/ui/sonner";
 import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
         <Toaster richColors theme="light" toastOptions={{}} />
       </AuthProvider>
