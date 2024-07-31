@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import LoginForm from "./ui/LoginForm";
+import LoginForm from "./LoginForm";
 
 export default function Login() {
   return (

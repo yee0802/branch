@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import RegisterForm from "./ui/RegisterForm";
+import RegisterForm from "./RegisterForm";
 
 export default function Register() {
   return (
