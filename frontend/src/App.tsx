@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import PageNotFound from "./components/PageNotFound";
 import { AuthProvider } from "./context/auth";
 import { Toaster } from "@/components/ui/sonner";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Toaster richColors theme="light" toastOptions={{}} />
       </AuthProvider>
