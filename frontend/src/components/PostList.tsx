@@ -15,7 +15,7 @@ const PostList = () => {
   }, []);
 
   return (
-    <div className="space-y-4 px-2 md:px-4">
+    <div className="mt-[89px] space-y-4 px-2 md:px-4">
       {posts.map((post, idx) => (
         <PostCard key={idx} post={post} />
       ))}
