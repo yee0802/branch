@@ -31,7 +31,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           </dd>
         </dl>
         <Link
-          to={`/${post.id}`}
+          to={`/post/${post.id}`}
           className={cn(buttonVariants({ variant: "link" }), "py-0")}
         >
           Read More ➟
