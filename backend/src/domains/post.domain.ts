@@ -4,10 +4,10 @@ export const getAllPostsDb = async () =>
   await prisma.post.findMany({
     select: {
       id: true,
+      slug: true,
       title: true,
       content: true,
       description: true,
-      image: true,
       createdAt: true,
       author: {
         select: {
