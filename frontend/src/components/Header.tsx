@@ -5,7 +5,7 @@ import ProfileButton from "./ui/ProfileButton.tsx";
 
 export default function Header() {
   return (
-    <header className="fixed w-full border-b bg-background/95 px-6 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:flex sm:justify-between">
+    <header className="fixed z-50 w-full border-b bg-background/95 px-6 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:flex sm:justify-between">
       <Container>
         <div className="relative flex h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
