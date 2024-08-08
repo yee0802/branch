@@ -14,6 +14,7 @@ const userData: Prisma.UserCreateInput[] = [
       create: [
         {
           title: "Exploring the Mysteries of the Cosmos",
+          slug: "exploring-mysteries-of-the-cosmos",
           description:
             "Dive into the wonders of the universe as we unravel secrets of galaxies far, far away.",
           content:
@@ -22,6 +23,7 @@ const userData: Prisma.UserCreateInput[] = [
         {
           title:
             "The Quest for Extraterrestrial Intelligence: A Global Pursuit",
+          slug: "quest-for-extraterrestrial-intelligence",
           description:
             "Join the global effort to find intelligent life beyond Earth. Are we alone in the universe?",
           content:
@@ -39,6 +41,7 @@ const userData: Prisma.UserCreateInput[] = [
       create: [
         {
           title: "Unveiling the Secrets of Ancient Civilizations",
+          slug: "secrets-of-ancient-civilizations",
           description:
             "Travel back in time and uncover the hidden truths of ancient societies.",
           content:
@@ -56,6 +59,7 @@ const userData: Prisma.UserCreateInput[] = [
       create: [
         {
           title: "Unraveling the Enigma of Time Travel",
+          slug: "enigma-of-time-travel",
           description:
             "Is time travel possible? Explore the theories and science behind moving through time.",
           content:
@@ -73,6 +77,7 @@ const userData: Prisma.UserCreateInput[] = [
       create: [
         {
           title: "Journey Through the Unknown: Tales from the Abyss",
+          slug: "journey-through-the-abyss",
           description:
             "Embark on an adventure to the deepest parts of the ocean, where mysteries await.",
           content:
@@ -90,6 +95,7 @@ const userData: Prisma.UserCreateInput[] = [
       create: [
         {
           title: "The Rise of Virtual Reality: A New Era Dawns",
+          slug: "rise-of-virtual-reality",
           description:
             "Step into the future with virtual reality. Discover its impact and potential.",
           content:
