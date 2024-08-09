@@ -40,6 +40,10 @@ export const AuthProvider = ({ children }: Props) => {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     }
 
+    if (!token) {
+      navigate("/login", { state: null });
+    }
+
     setIsReady(true);
   }, []);
 
