@@ -19,3 +19,23 @@ export const getAllPostsDb = async () =>
       },
     },
   });
+
+export const getPostBySlugDb = async (slug: string) =>
+  await prisma.post.findUnique({
+    where: { slug },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      description: true,
+      createdAt: true,
+      author: {
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          username: true,
+        },
+      },
+    },
+  });
