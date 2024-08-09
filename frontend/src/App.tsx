@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/auth";
 import { Toaster } from "@/components/ui/sonner";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import PostPage from "./components/PostPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/post/:slug" element={<PostPage />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
