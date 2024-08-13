@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import useAuth from "@/hooks/useAuth";
-import { LoginSchema } from "@/schema";
+import { RegisterSchema } from "@/schema";
 import { z } from "zod";
 import { handleError } from "@/service/errorHandler";
 import {
@@ -10,26 +10,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
+} from "./form";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { Form } from "@/components/ui/form";
 import { Button, buttonVariants } from "@/components/ui/button";
 
-const LoginForm = () => {
-  const { loginUser } = useAuth();
+const RegisterForm = () => {
+  const { registerUser } = useAuth();
 
   const form = useForm({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
+      username: "",
       password: "",
     },
   });
 
-  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
     try {
-      loginUser(data.email, data.password);
+      registerUser(data.username, data.password, data.email);
       form.reset();
     } catch (err) {
       handleError(err);
@@ -50,8 +51,23 @@ const LoginForm = () => {
                   <Input
                     {...field}
                     type="email"
-                    placeholder="user@example.co.uk"
+                    placeholder="user@example.com"
                   />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid gap-2">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="username">Username</FormLabel>
+                <FormControl>
+                  <Input {...field} type="username" placeholder="username" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -75,10 +91,10 @@ const LoginForm = () => {
         </div>
         <div className="flex flex-col gap-2 pt-5">
           <Button type="submit" className="w-full">
-            Sign in
+            Sign up
           </Button>
-          <Link to="/register" className={buttonVariants({ variant: "link" })}>
-            Don't have an account? Sign up!
+          <Link to="/login" className={buttonVariants({ variant: "link" })}>
+            Already have an account? Sign in!
           </Link>
         </div>
       </form>
@@ -86,4 +102,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
