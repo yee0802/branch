@@ -16,8 +16,11 @@ export const getUserByUsernameDb = async (username: string) =>
     where: { username },
     select: {
       id: true,
+      firstName: true,
+      lastName: true,
       username: true,
       email: true,
+      createdAt: true,
     },
   });
 

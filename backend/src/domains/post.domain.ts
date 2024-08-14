@@ -13,7 +13,8 @@ export const getAllPostsDb = async () =>
         select: {
           id: true,
           email: true,
-          name: true,
+          firstName: true,
+          lastName: true,
           username: true,
         },
       },
@@ -33,7 +34,8 @@ export const getPostBySlugDb = async (slug: string) =>
         select: {
           id: true,
           email: true,
-          name: true,
+          firstName: true,
+          lastName: true,
           username: true,
         },
       },
