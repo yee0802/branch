@@ -6,7 +6,7 @@ import Container from "./ui/Container";
 import Header from "./Header";
 import ArticleSkeleton from "./ui/ArticleSkeleton";
 import PostPageContent from "./ui/PostPageContent";
-import PageNotFound from "./PageNotFound";
+import FallbackPage from "./FallbackPage";
 
 const PostPage: React.FC = () => {
   const [post, setPost] = useState<Post | undefined>(undefined);
@@ -29,7 +29,7 @@ const PostPage: React.FC = () => {
   }, [slug]);
 
   if (error) {
-    return <PageNotFound />;
+    return <FallbackPage message="A server error occured." status={500} />;
   }
 
   return (

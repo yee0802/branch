@@ -1,12 +1,12 @@
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
-import PageNotFound from "./components/PageNotFound";
 import { AuthProvider } from "./context/auth";
 import { Toaster } from "@/components/ui/sonner";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import PostPage from "./components/PostPage";
+import FallbackPage from "./components/FallbackPage";
 
 function App() {
   return (
@@ -14,8 +14,16 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/post/:slug" element={<PostPage />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="/posts/:slug" element={<PostPage />} />
+          <Route
+            path="*"
+            element={
+              <FallbackPage
+                message="This page could not be found."
+                status={404}
+              />
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
