@@ -21,6 +21,16 @@ export const getUserByUsernameDb = async (username: string) =>
       username: true,
       email: true,
       createdAt: true,
+      posts: {
+        select: {
+          id: true,
+          slug: true,
+          title: true,
+          content: true,
+          description: true,
+          createdAt: true,
+        },
+      },
     },
   });
 
