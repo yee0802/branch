@@ -34,6 +34,18 @@ export const getUserByUsernameDb = async (username: string) =>
     },
   });
 
+export const getUserByIdDb = async (id: string) =>
+  await prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      username: true,
+      email: true,
+    },
+  });
+
 export const createUserDb = async (
   username: string,
   password: string,
