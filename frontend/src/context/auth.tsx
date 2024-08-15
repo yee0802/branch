@@ -5,47 +5,46 @@ import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type AuthContextType = {
-  user: UserProfile | null;
   token: string | null;
+  user: UserProfile | null;
   registerUser: (email: string, username: string, password: string) => void;
   loginUser: (username: string, password: string) => void;
   logout: () => void;
-  isLoggedIn: () => boolean;
+  isLoggedIn: boolean;
 };
 
-type Props = { children: React.ReactNode };
-
 type UserProfile = {
+  id: string;
   username: string;
-  email: string;
+};
+
+type AuthProviderProps = {
+  children: React.ReactNode;
 };
 
 export const AuthContext = createContext<AuthContextType>(
   {} as AuthContextType,
 );
 
-export const AuthProvider = ({ children }: Props) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const navigate = useNavigate();
+
   const [user, setUser] = useState<UserProfile | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [isReady, setIsReady] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
     const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
 
-    if (user && token) {
-      setUser(JSON.parse(user));
-      setToken(token);
+    if (token && user) {
+      setIsLoggedIn(true);
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     }
 
-    if (!token) {
-      navigate("/login", { state: null });
-    }
-
     setIsReady(true);
-  }, []);
+  }, [user]);
 
   const registerUser = async (
     username: string,
@@ -70,14 +69,10 @@ export const AuthProvider = ({ children }: Props) => {
       .then((res) => {
         if (res) {
           localStorage.setItem("token", res?.data.token);
+          localStorage.setItem("user", res?.data.user.username);
+
           setToken(res.data.token);
-
-          const userObj = {
-            username: res?.data.username,
-            email: res?.data.email,
-          };
-
-          localStorage.setItem("user", JSON.stringify(userObj));
+          setUser(res.data.user);
 
           toast.success("Login Successful!");
           navigate("/");
@@ -89,14 +84,11 @@ export const AuthProvider = ({ children }: Props) => {
       });
   };
 
-  const isLoggedIn = () => {
-    return !!user;
-  };
-
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
+    setIsLoggedIn(false);
     setToken("");
     navigate("/login");
   };
