@@ -67,7 +67,10 @@ export const loginUser = async (req: Request, res: Response) => {
       expiresIn: expiration,
     });
 
-    return res.status(200).send({ token: token });
+    return res.status(200).send({
+      token: token,
+      user: { id: foundUser.id, username: foundUser.username },
+    });
   } catch (err) {
     console.log("Error logging in user:", err.message);
     return res.status(err.status ?? 500).send({ error: err.message });
