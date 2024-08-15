@@ -9,12 +9,15 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import defaultProfileImage from "@/assets/Default_pfp.jpg";
 import useAuth from "@/hooks/useAuth";
+import { Link } from "react-router-dom";
 
 const ProfileButton = () => {
-  const { logout } = useAuth();
+  const { logout, isLoggedIn } = useAuth();
+
+  const username = localStorage.getItem("user");
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage src={defaultProfileImage} />
@@ -22,14 +25,28 @@ const ProfileButton = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer" onClick={logout}>
-          Log Out
-        </DropdownMenuItem>
+        {isLoggedIn ? (
+          <>
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link to={`/users/${username}`}>Profile</Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer" onClick={logout}>
+              Log Out
+            </DropdownMenuItem>
+          </>
+        ) : (
+          <>
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link to="/register">Register</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link to="/login">Login</Link>
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
