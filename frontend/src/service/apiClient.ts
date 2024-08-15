@@ -3,6 +3,7 @@ import { PostsAxiosResponse } from "@/interfaces/PostsAxiosResponse";
 import { AxiosResponse } from "axios";
 import { handleError } from "./errorHandler";
 import { PostAxiosResponse } from "@/interfaces/PostAxiosResponse";
+import UserAxiosResponse from "@/interfaces/UserAxiosResponse";
 
 export const getAllPostsAPI = async (): Promise<PostsAxiosResponse> => {
   const res: AxiosResponse<PostsAxiosResponse> = await api.get("/posts");
@@ -16,6 +17,18 @@ export const getPostBySlugAPI = async (
   const res: AxiosResponse<PostAxiosResponse> = await api.get(`/posts/${slug}`);
 
   return res.data;
+};
+
+export const getUserByUsernameAPI = async (username: string) => {
+  try {
+    const res: AxiosResponse<UserAxiosResponse> = await api.get(
+      `/user/${username}`,
+    );
+
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
 };
 
 export const registerAPI = async (
