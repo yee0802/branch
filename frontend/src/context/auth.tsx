@@ -90,6 +90,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(null);
     setIsLoggedIn(false);
     setToken("");
+    axios.defaults.headers.common["Authorization"] = undefined;
     navigate("/login");
   };
 
