@@ -1,3 +1,4 @@
+import { UpdatedProfileData } from "../types/user.types";
 import prisma from "../utils/prisma";
 
 export const getUserByEmailDb = async (email: string) =>
@@ -43,6 +44,18 @@ export const getUserByIdDb = async (id: string) =>
       lastName: true,
       username: true,
       email: true,
+    },
+  });
+
+export const updateUserByIdDb = async (id: string, data: UpdatedProfileData) =>
+  await prisma.user.update({
+    where: { id },
+    data: data,
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      username: true,
     },
   });
 
