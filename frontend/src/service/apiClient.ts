@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios";
 import { handleError } from "./errorHandler";
 import { PostAxiosResponse } from "@/interfaces/PostAxiosResponse";
 import UserAxiosResponse from "@/interfaces/UserAxiosResponse";
+import { EditProfileSchema } from "@/schema";
 
 export const getAllPostsAPI = async (): Promise<PostsAxiosResponse> => {
   const res: AxiosResponse<PostsAxiosResponse> = await api.get("/posts");
@@ -24,6 +25,18 @@ export const getUserByUsernameAPI = async (username: string) => {
     const res: AxiosResponse<UserAxiosResponse> = await api.get(
       `/user/${username}`,
     );
+
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const updateUserProfileByIdAPI = async (id: string, data: unknown) => {
+  try {
+    const validatedData = EditProfileSchema.parse(data);
+
+    const res = await api.patch(`/user/${id}/profile`, validatedData);
 
     return res.data;
   } catch (err) {
