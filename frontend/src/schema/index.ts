@@ -20,3 +20,22 @@ export const LoginSchema = z.object({
     message: "Password must be at least 6 characters long",
   }),
 });
+
+export const EditProfileSchema = z.object({
+  firstName: z
+    .string()
+    .min(1, {
+      message: "Must be 1 or more characters long",
+    })
+    .max(15, {
+      message: "Must be 15 or less characters long ",
+    }),
+  lastName: z
+    .string()
+    .min(1, {
+      message: "Must be 1 or more characters long",
+    })
+    .max(15, {
+      message: "Must be 15 or less characters long ",
+    }),
+});
