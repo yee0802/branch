@@ -10,11 +10,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import defaultProfileImage from "@/assets/Default_pfp.jpg";
 import useAuth from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ProfileButton = () => {
   const { logout, isLoggedIn } = useAuth();
 
   const username = localStorage.getItem("user");
+
+  const queryClient = useQueryClient();
 
   return (
     <DropdownMenu modal={false}>
@@ -33,7 +36,13 @@ const ProfileButton = () => {
               <Link to={`/users/${username}`}>Profile</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer" onClick={logout}>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => {
+                queryClient.clear();
+                logout();
+              }}
+            >
               Log Out
             </DropdownMenuItem>
           </>

@@ -2,7 +2,6 @@ import useAuth from "@/hooks/useAuth";
 import defaultProfileImage from "@/assets/Default_pfp.jpg";
 import Header from "./Header";
 import Container from "./ui/Container";
-import { useEffect, useState } from "react";
 import EditProfileButton from "./ui/EditProfileButton";
 import { useParams } from "react-router-dom";
 import { getUserByUsernameAPI } from "@/service/apiClient";
@@ -11,34 +10,21 @@ import UserPosts from "./ui/UserPosts";
 import { formatDate } from "@/lib/utils";
 import FallbackPage from "./FallbackPage";
 import ProfileSkeleton from "./ui/ProfileSkeleton";
+import { useQuery } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
 
 const ProfilePage: React.FC = () => {
   const { isLoggedIn } = useAuth();
   const { usernameParam } = useParams();
 
-  const [userProfile, setUserProfile] = useState<User>();
-  const [error, setError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [refresh, setRefresh] = useState<boolean>(false);
-
   const username = localStorage.getItem("user");
 
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (usernameParam) {
-      getUserByUsernameAPI(usernameParam)
-        .then((res) => setUserProfile(res?.user))
-        .catch((err) => {
-          console.error(err);
-          setError(true);
-        })
-        .finally(() => {
-          setIsLoading(false);
-          setRefresh(false);
-        });
-    }
-  }, [usernameParam, refresh]);
+  const { data, status, error } = useQuery<User>({
+    queryKey: ["user-profile", usernameParam],
+    queryFn: ({ queryKey }) =>
+      getUserByUsernameAPI(queryKey[1] as string).then((res) => res.user),
+    retry: false,
+  });
 
   if (!isLoggedIn) {
     return (
@@ -49,8 +35,18 @@ const ProfilePage: React.FC = () => {
     );
   }
 
-  if (error) {
-    return <FallbackPage message={"A server error occured."} status={500} />;
+  if (status === "error") {
+    if (isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.error || "An unexpected error occurred";
+      const statusCode = error.response?.status ?? 500;
+
+      return <FallbackPage message={errorMessage} status={statusCode} />;
+    }
+
+    return (
+      <FallbackPage message="A non-Axios server error occurred" status={500} />
+    );
   }
 
   return (
@@ -58,7 +54,7 @@ const ProfilePage: React.FC = () => {
       <Header />
       <Container>
         <div className="flex h-full flex-col items-center gap-y-8 px-2 py-4 sm:py-6 lg:py-8">
-          {isLoading ? (
+          {status === "pending" ? (
             <ProfileSkeleton />
           ) : (
             <>
@@ -75,8 +71,8 @@ const ProfilePage: React.FC = () => {
                   <div className="me-auto space-y-3">
                     <div>
                       <h1 className="text-2xl font-bold sm:text-3xl">
-                        {userProfile?.firstName && userProfile.lastName
-                          ? `${userProfile?.firstName} ${userProfile?.lastName}`
+                        {data.firstName && data.lastName
+                          ? `${data.firstName} ${data.lastName}`
                           : usernameParam}
                       </h1>
                       <div className="text-muted-foreground">
@@ -84,21 +80,17 @@ const ProfilePage: React.FC = () => {
                       </div>
                     </div>
                     <div>
-                      Member since{" "}
-                      {userProfile ? formatDate(userProfile?.createdAt) : null}
+                      Member since {data ? formatDate(data.createdAt) : null}
                     </div>
                     <div className="flex items-center gap-3">
                       Posts:{" "}
                       <span className="font-semibold">
-                        {userProfile?.posts.length}
+                        {data?.posts.length}
                       </span>
                     </div>
                   </div>
-                  {usernameParam == username && userProfile?.id ? (
-                    <EditProfileButton
-                      id={userProfile.id}
-                      setRefresh={setRefresh}
-                    />
+                  {usernameParam == username ? (
+                    <EditProfileButton id={data.id} />
                   ) : null}
                 </div>
               </div>
@@ -109,7 +101,7 @@ const ProfilePage: React.FC = () => {
                 </h2>
               </div>
 
-              {userProfile?.id && <UserPosts posts={userProfile?.posts} />}
+              <UserPosts posts={data.posts} />
             </>
           )}
         </div>

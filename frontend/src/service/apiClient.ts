@@ -21,18 +21,20 @@ export const getPostBySlugAPI = async (
 };
 
 export const getUserByUsernameAPI = async (username: string) => {
-  try {
-    const res: AxiosResponse<UserAxiosResponse> = await api.get(
-      `/user/${username}`,
-    );
+  const res: AxiosResponse<UserAxiosResponse> = await api.get(
+    `/user/${username}`,
+  );
 
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
+  return res.data;
 };
 
-export const updateUserProfileByIdAPI = async (id: string, data: unknown) => {
+export const updateUserProfileByIdAPI = async ({
+  id,
+  data,
+}: {
+  id: string;
+  data: unknown;
+}) => {
   try {
     const validatedData = EditProfileSchema.parse(data);
 

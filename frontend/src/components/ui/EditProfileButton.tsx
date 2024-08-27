@@ -21,17 +21,19 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EditProfileSchema } from "@/schema";
-import { handleError } from "@/service/errorHandler";
 import { z } from "zod";
 import { updateUserProfileByIdAPI } from "@/service/apiClient";
 import { toast } from "sonner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 type EditProfileButtonProps = {
   id: string;
-  setRefresh: (boolean: boolean) => void;
 };
 
-const EditProfileButton = ({ id, setRefresh }: EditProfileButtonProps) => {
+const EditProfileButton = ({ id }: EditProfileButtonProps) => {
+  const [open, setOpen] = useState<boolean>(false);
+
   const form = useForm({
     resolver: zodResolver(EditProfileSchema),
     defaultValues: {
@@ -40,23 +42,27 @@ const EditProfileButton = ({ id, setRefresh }: EditProfileButtonProps) => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof EditProfileSchema>) => {
-    try {
-      updateUserProfileByIdAPI(id, data)
-        .then((res) => res && toast.success("Update Successful!"))
-        .catch((err) => {
-          console.log(err);
-          toast.error("Server error occured");
-        })
-        .finally(() => setRefresh(true));
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: updateUserProfileByIdAPI,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user-profile"] });
+      toast.success("Update Successful!");
       form.reset();
-    } catch (err) {
-      handleError(err);
-    }
+    },
+    onError: () => {
+      toast.error("Server error occurred");
+    },
+  });
+
+  const onSubmit = (data: z.infer<typeof EditProfileSchema>) => {
+    mutate({ id, data });
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Edit Profile</Button>
       </DialogTrigger>
