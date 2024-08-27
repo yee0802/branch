@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import PostPage from "./components/PostPage";
+import ProfilePage from "./components/ProfilePage";
 import FallbackPage from "./components/FallbackPage";
 import ReactQueryProvider from "./components/ReactQueryProvider";
 
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/posts/:slug" element={<PostPage />} />
+            <Route path="/users/:usernameParam" element={<ProfilePage />} />
             <Route
               path="*"
               element={
