@@ -17,7 +17,7 @@ const PostPageContent: React.FC<PostPageContentProps> = ({ post }) => {
       <p className="mt-4 border-b pb-4 text-center sm:text-left">
         Created by{" "}
         <Link
-          className="font-bold underline"
+          className="text-lg font-bold"
           to={`/users/${post?.author?.username}`}
         >
           {post?.author?.username}
