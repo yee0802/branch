@@ -20,6 +20,9 @@ export const getAllPostsDb = async () =>
         },
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
 export const getPostBySlugDb = async (slug: string) =>
