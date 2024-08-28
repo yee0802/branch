@@ -31,6 +31,7 @@ export const getUserByUsernameDb = async (username: string) =>
           description: true,
           createdAt: true,
         },
+        orderBy: { createdAt: "desc" },
       },
     },
   });
