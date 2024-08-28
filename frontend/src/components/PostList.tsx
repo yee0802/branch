@@ -4,8 +4,12 @@ import { Post } from "@/interfaces/Post";
 import PostListSkeleton from "./ui/PostListSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import FallbackPage from "./FallbackPage";
+import CreatePostButton from "./ui/CreatePostButton";
+import useAuth from "@/hooks/useAuth";
 
 const PostList = () => {
+  const { user } = useAuth();
+
   const { data, status } = useQuery<Post[]>({
     queryKey: ["post-list"],
     queryFn: () => getAllPostsAPI().then((res) => res.posts),
@@ -25,7 +29,12 @@ const PostList = () => {
       {status === "pending" ? (
         <PostListSkeleton />
       ) : (
-        data.map((post, idx) => <PostCard key={idx} post={post} />)
+        <>
+          {user && <CreatePostButton />}
+          {data.map((post, idx) => (
+            <PostCard key={idx} post={post} />
+          ))}
+        </>
       )}
     </div>
   );
