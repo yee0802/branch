@@ -4,7 +4,8 @@ import { AxiosResponse } from "axios";
 import { handleError } from "./errorHandler";
 import { PostAxiosResponse } from "@/interfaces/PostAxiosResponse";
 import UserAxiosResponse from "@/interfaces/UserAxiosResponse";
-import { EditProfileSchema } from "@/schema";
+import { CreatePostSchema, EditProfileSchema } from "@/schema";
+import slugify from "slugify";
 
 export const getAllPostsAPI = async (): Promise<PostsAxiosResponse> => {
   const res: AxiosResponse<PostsAxiosResponse> = await api.get("/posts");
@@ -39,6 +40,31 @@ export const updateUserProfileByIdAPI = async ({
     const validatedData = EditProfileSchema.parse(data);
 
     const res = await api.patch(`/user/${id}/profile`, validatedData);
+
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const createPostAPI = async ({
+  authorId,
+  data,
+}: {
+  authorId: string;
+  data: unknown;
+}) => {
+  try {
+    const validatedData = CreatePostSchema.parse(data);
+
+    const slug: string = slugify(validatedData.title, {
+      lower: true,
+      strict: true,
+    });
+
+    const createPostData = { authorId, slug, ...validatedData };
+
+    const res = await api.post(`/posts/create-post`, createPostData);
 
     return res.data;
   } catch (err) {
