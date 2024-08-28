@@ -27,7 +27,7 @@ export const updateUserById = async (req: Request, res: Response) => {
 
     const updatedUser = await updateUserByIdDb(id, updatedData);
 
-    return res.status(201).send({ user: updatedUser });
+    return res.status(200).send({ user: updatedUser });
   } catch (err) {
     console.log("Error updating user by ID:", err.message);
     return res.status(err.status ?? 500).send({ error: err.message });
