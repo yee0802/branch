@@ -13,9 +13,7 @@ import { Link } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
 const ProfileButton = () => {
-  const { logout, isLoggedIn } = useAuth();
-
-  const username = localStorage.getItem("user");
+  const { logout, user } = useAuth();
 
   const queryClient = useQueryClient();
 
@@ -24,16 +22,16 @@ const ProfileButton = () => {
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage src={defaultProfileImage} />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback delayMs={400}>CN</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {isLoggedIn ? (
+        {user ? (
           <>
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link to={`/users/${username}`}>Profile</Link>
+              <Link to={`/users/${user?.username}`}>Profile</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

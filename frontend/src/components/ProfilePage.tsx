@@ -14,10 +14,8 @@ import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 
 const ProfilePage: React.FC = () => {
-  const { isLoggedIn } = useAuth();
+  const { user } = useAuth();
   const { usernameParam } = useParams();
-
-  const username = localStorage.getItem("user");
 
   const { data, status, error } = useQuery<User>({
     queryKey: ["user-profile", usernameParam],
@@ -26,7 +24,7 @@ const ProfilePage: React.FC = () => {
     retry: false,
   });
 
-  if (!isLoggedIn) {
+  if (!user) {
     return (
       <FallbackPage
         message="You are unauthorized to view this page."
@@ -89,7 +87,7 @@ const ProfilePage: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                  {usernameParam == username ? (
+                  {usernameParam == user.username ? (
                     <EditProfileButton id={data.id} />
                   ) : null}
                 </div>
