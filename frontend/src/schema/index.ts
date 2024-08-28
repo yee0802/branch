@@ -39,3 +39,18 @@ export const EditProfileSchema = z.object({
       message: "Must be 15 or less characters long ",
     }),
 });
+
+export const CreatePostSchema = z.object({
+  title: z
+    .string()
+    .min(5, { message: "Title must be 5 or more characters long" })
+    .max(65, { message: "Title must be 65 or less characters long" }),
+  description: z
+    .string()
+    .min(5, { message: "Description must be 5 or more characters long" })
+    .max(100, { message: "Description must be 100 or less characters long" }),
+  content: z
+    .string()
+    .min(10, { message: "Body must be 10 or more characters long" })
+    .max(5000, { message: "Body must be 5000 or less characters long" }),
+});
