@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   createPostDb,
+  deletePostDb,
   getAllPostsDb,
   getPostBySlugDb,
 } from "../domains/post.domain";
@@ -39,6 +40,19 @@ export const createPost = async (req: Request, res: Response) => {
     return res.status(201).send({ post: newPost });
   } catch (err) {
     console.log("Error creating post:", err.message);
+    return res.status(err.status ?? 500).send({ error: err.message });
+  }
+};
+
+export const deletePostById = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+
+    const deletedPost = await deletePostDb(id);
+
+    return res.status(200).send({ post: deletedPost });
+  } catch (err) {
+    console.log("Error deleting post:", err.message);
     return res.status(err.status ?? 500).send({ error: err.message });
   }
 };
