@@ -48,7 +48,17 @@ export const getPostBySlugDb = async (slug: string) =>
 
 export const createPostDb = async (data: NewPostData) =>
   await prisma.post.create({
-    data: data,
+    data: {
+      slug: data.slug,
+      title: data.title,
+      description: data.description,
+      content: data.content,
+      author: {
+        connect: {
+          id: data.authorId,
+        },
+      },
+    },
     select: {
       id: true,
       slug: true,
