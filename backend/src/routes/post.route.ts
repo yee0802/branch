@@ -1,5 +1,6 @@
 import {
   createPost,
+  deletePostById,
   getAllPosts,
   getPostBySlug,
 } from "../controllers/post.controller";
@@ -12,5 +13,6 @@ router.get("/", getAllPosts);
 router.get("/:slug", getPostBySlug);
 
 router.post("/create-post", verifyToken, createPost);
+router.delete("/delete-post/:id", verifyToken, deletePostById);
 
 export default router;
