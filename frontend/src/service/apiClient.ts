@@ -72,6 +72,16 @@ export const createPostAPI = async ({
   }
 };
 
+export const deletePostByIdAPI = async (id: string) => {
+  try {
+    const res = await api.delete(`/posts/delete-post/${id}`);
+
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
 export const registerAPI = async (
   username: string,
   password: string,
