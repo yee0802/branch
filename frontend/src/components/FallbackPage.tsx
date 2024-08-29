@@ -5,7 +5,7 @@ type FallbackPageProps = {
   status: number;
 };
 
-const FallbackPage = ({ message, status }: FallbackPageProps) => {
+const FallbackPage: React.FC<FallbackPageProps> = ({ message, status }) => {
   return (
     <div className="flex h-screen min-h-screen w-screen flex-col">
       <Header />

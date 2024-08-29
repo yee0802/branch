@@ -31,7 +31,7 @@ type EditProfileButtonProps = {
   id: string;
 };
 
-const EditProfileButton = ({ id }: EditProfileButtonProps) => {
+const EditProfileButton: React.FC<EditProfileButtonProps> = ({ id }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const form = useForm({
@@ -48,7 +48,7 @@ const EditProfileButton = ({ id }: EditProfileButtonProps) => {
     mutationFn: updateUserProfileByIdAPI,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user-profile"] });
-      toast.success("Update Successful!");
+      toast.success("Updated Successfully!");
       form.reset();
     },
     onError: () => {

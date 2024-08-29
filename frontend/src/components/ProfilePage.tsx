@@ -13,7 +13,7 @@ import ProfileSkeleton from "./ui/ProfileSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 
-const ProfilePage: React.FC = () => {
+const ProfilePage = () => {
   const { user } = useAuth();
   const { usernameParam } = useParams();
 

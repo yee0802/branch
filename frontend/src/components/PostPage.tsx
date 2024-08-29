@@ -9,7 +9,7 @@ import FallbackPage from "./FallbackPage";
 import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 
-const PostPage: React.FC = () => {
+const PostPage = () => {
   const params = useParams();
   const { slug } = params;
 
