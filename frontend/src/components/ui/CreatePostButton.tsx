@@ -48,7 +48,7 @@ const CreatePostButton = () => {
     mutationFn: createPostAPI,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["post-list"] });
-      toast.success("Post Successful!");
+      toast.success("Posted Successfully!");
       form.reset();
     },
     onError: () => {
