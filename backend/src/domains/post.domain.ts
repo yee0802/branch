@@ -1,3 +1,4 @@
+import { NewCommentData } from "../types/comment.types";
 import { NewPostData } from "../types/post.types";
 import prisma from "../utils/prisma";
 
@@ -102,5 +103,23 @@ export const deletePostDb = async (id: string) =>
     where: { id },
     select: {
       title: true,
+    },
+  });
+
+export const createCommentOnPostDb = async (data: NewCommentData) =>
+  await prisma.post.update({
+    where: { id: data.postId },
+    data: {
+      comments: {
+        create: {
+          content: data.content,
+          author: {
+            connect: { id: data.authorId },
+          },
+        },
+      },
+    },
+    select: {
+      id: true,
     },
   });
