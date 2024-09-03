@@ -11,7 +11,7 @@ const PostPageContent: React.FC<PostPageContentProps> = ({ post }) => {
   const { user } = useAuth();
 
   return (
-    <article className="prose dark:prose-invert mx-4 mt-[89px] w-[48rem] rounded-b-xl border-x border-b px-6 py-6">
+    <article className="prose dark:prose-invert mx-4 mt-[89px] rounded-b-xl border-x border-b px-6 py-6">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight sm:text-left md:text-5xl">
         {post.title}
       </h1>
@@ -24,10 +24,10 @@ const PostPageContent: React.FC<PostPageContentProps> = ({ post }) => {
         <p className="mt-4 pb-4 text-center sm:text-left">
           Created by{" "}
           <Link
-            className="text-lg font-bold"
+            className="text-lg font-bold hover:underline"
             to={`/users/${post.author.username}`}
           >
-            {post.author.username}
+            {`@${post.author.username}`}
           </Link>
         </p>
         {user?.id === post.author.id && <PostOptionsButton post={post} />}
