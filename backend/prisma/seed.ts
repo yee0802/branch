@@ -110,12 +110,176 @@ const userData: Prisma.UserCreateInput[] = [
     },
   },
 ];
+
+const commentData: Prisma.CommentCreateInput[] = [
+  {
+    content:
+      "This is truly inspiring, Stella! The universe is indeed vast and mysterious.",
+    author: {
+      connect: { username: "adventureseeker" },
+    },
+    post: { connect: { slug: "exploring-mysteries-of-the-cosmos" } },
+  },
+  {
+    content: "I love your perspective on the cosmos. Can't wait to read more!",
+    author: {
+      connect: { username: "mysterysolver" },
+    },
+    post: { connect: { slug: "exploring-mysteries-of-the-cosmos" } },
+  },
+  {
+    content:
+      "Fascinating! I'm convinced we'll find something out there someday.",
+    author: {
+      connect: { username: "explorer24" },
+    },
+    post: {
+      connect: { slug: "quest-for-extraterrestrial-intelligence" },
+    },
+  },
+  {
+    content:
+      "The idea of making contact with extraterrestrial life is thrilling!",
+    author: {
+      connect: { username: "techlover99" },
+    },
+    post: {
+      connect: { slug: "quest-for-extraterrestrial-intelligence" },
+    },
+  },
+  {
+    content:
+      "Maxwell, your work always inspires me to explore the past. Keep it up!",
+    author: {
+      connect: { username: "stargazer12" },
+    },
+    post: {
+      connect: { slug: "secrets-of-ancient-civilizations" },
+    },
+  },
+  {
+    content:
+      "The ancient world holds so many secrets. I love reading about your discoveries.",
+    author: {
+      connect: { username: "mysterysolver" },
+    },
+    post: {
+      connect: { slug: "secrets-of-ancient-civilizations" },
+    },
+  },
+  {
+    content: "Amazing! I'm looking forward to more of your adventures.",
+    author: {
+      connect: { username: "techlover99" },
+    },
+    post: {
+      connect: { slug: "secrets-of-ancient-civilizations" },
+    },
+  },
+  {
+    content:
+      "Time travel is such a mind-bending concept! Your post made me think.",
+    author: {
+      connect: { username: "adventureseeker" },
+    },
+    post: { connect: { slug: "enigma-of-time-travel" } },
+  },
+  {
+    content: "I love how you delve into such complex topics. Keep exploring!",
+    author: {
+      connect: { username: "stargazer12" },
+    },
+    post: { connect: { slug: "enigma-of-time-travel" } },
+  },
+  {
+    content:
+      "Your insights into time travel are incredible. Can't wait to see what you explore next!",
+    author: {
+      connect: { username: "techlover99" },
+    },
+    post: { connect: { slug: "enigma-of-time-travel" } },
+  },
+  {
+    content: "Your ocean adventures are always so thrilling, Christopher!",
+    author: {
+      connect: { username: "mysterysolver" },
+    },
+    post: {
+      connect: { slug: "journey-through-the-abyss" },
+    },
+  },
+  {
+    content:
+      "The ocean is such a mysterious place. I love reading your stories.",
+    author: {
+      connect: { username: "stargazer12" },
+    },
+    post: {
+      connect: { slug: "journey-through-the-abyss" },
+    },
+  },
+  {
+    content:
+      "Amazing dive! I can't wait to hear more about your underwater explorations.",
+    author: {
+      connect: { username: "adventureseeker" },
+    },
+    post: {
+      connect: { slug: "journey-through-the-abyss" },
+    },
+  },
+  {
+    content:
+      "Ken, your insights on VR are spot on! This technology is indeed transformative.",
+    author: {
+      connect: { username: "explorer24" },
+    },
+    post: {
+      connect: { slug: "rise-of-virtual-reality" },
+    },
+  },
+  {
+    content:
+      "Virtual reality is the future! Loved reading your thoughts on this.",
+    author: {
+      connect: { username: "mysterysolver" },
+    },
+    post: {
+      connect: { slug: "rise-of-virtual-reality" },
+    },
+  },
+  {
+    content: "I completely agree, VR is changing everything. Great post!",
+    author: {
+      connect: { username: "stargazer12" },
+    },
+    post: {
+      connect: { slug: "rise-of-virtual-reality" },
+    },
+  },
+  {
+    content: "I'm excited to see where VR takes us next. Thanks for sharing!",
+    author: {
+      connect: { username: "adventureseeker" },
+    },
+    post: {
+      connect: { slug: "rise-of-virtual-reality" },
+    },
+  },
+];
+
 async function seed() {
   console.log(`Start seeding ...`);
 
   for (const user of userData) {
     await prisma.user.create({
       data: user,
+    });
+  }
+
+  for (const comment of commentData) {
+    await prisma.comment.create({
+      data: comment,
     });
   }
 
