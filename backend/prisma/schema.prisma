@@ -15,18 +15,31 @@ model User {
   firstName String?
   lastName  String?
   posts     Post[]
+  comments  Comment[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  slug      String   @unique
-  title     String 
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug        String   @unique
+  title       String 
   description String
+  content     String
+  comments    Comment[]
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String   @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Comment {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   content   String
-  author    User? @relation(fields: [authorId], references: [id])
-  authorId  String? @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String    @db.ObjectId
+  post      Post      @relation(fields: [postId], references: [id])
+  postId    String    @db.ObjectId
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
