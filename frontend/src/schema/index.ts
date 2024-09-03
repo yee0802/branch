@@ -54,3 +54,10 @@ export const CreatePostSchema = z.object({
     .min(10, { message: "Body must be 10 or more characters long" })
     .max(5000, { message: "Body must be 5000 or less characters long" }),
 });
+
+export const CreateCommentSchema = z.object({
+  content: z
+    .string()
+    .min(1, { message: "Must be 1 or more characters long" })
+    .max(200, { message: "Must be 200 or less characters long" }),
+});
