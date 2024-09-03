@@ -7,6 +7,7 @@ import {
 } from "../domains/post.domain";
 import throwNewError from "../error";
 import { NewPostData } from "../types/post.types";
+import { deleteCommentsOnPostDb } from "../domains/comments.domain";
 
 export const getAllPosts = async (req: Request, res: Response) => {
   const posts = await getAllPostsDb();
@@ -47,6 +48,8 @@ export const createPost = async (req: Request, res: Response) => {
 export const deletePostById = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
+
+    const deleteCommentsOnPost = await deleteCommentsOnPostDb(id);
 
     const deletedPost = await deletePostDb(id);
 
