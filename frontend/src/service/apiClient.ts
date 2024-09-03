@@ -64,7 +64,7 @@ export const createPostAPI = async ({
 
     const createPostData = { authorId, slug, ...validatedData };
 
-    const res = await api.post(`/posts/create-post`, createPostData);
+    const res = await api.post("/posts/create-post", createPostData);
 
     return res.data;
   } catch (err) {
@@ -75,6 +75,29 @@ export const createPostAPI = async ({
 export const deletePostByIdAPI = async (id: string) => {
   try {
     const res = await api.delete(`/posts/delete-post/${id}`);
+
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const createCommentAPI = async ({
+  postId,
+  authorId,
+  content,
+}: {
+  postId: string;
+  authorId: string;
+  content: string;
+}) => {
+  try {
+    const createCommentData = { authorId, postId, content };
+
+    const res = await api.patch(
+      `/posts/${postId}/create-comment`,
+      createCommentData,
+    );
 
     return res.data;
   } catch (err) {
