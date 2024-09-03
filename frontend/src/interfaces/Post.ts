@@ -1,4 +1,5 @@
 import { Author } from "./Author";
+import Comment from "./Comment";
 
 export interface Post {
   id: string;
@@ -7,6 +8,7 @@ export interface Post {
   content: string;
   description: string;
   image: string;
-  createdAt: string;
   author: Author;
+  comments: Comment[];
+  createdAt: string;
 }
