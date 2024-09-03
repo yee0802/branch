@@ -8,6 +8,7 @@ import PostPageContent from "./ui/PostPageContent";
 import FallbackPage from "./FallbackPage";
 import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
+import PostPageComments from "./ui/PostPageComments";
 
 const PostPage = () => {
   const params = useParams();
@@ -42,7 +43,10 @@ const PostPage = () => {
           {status === "pending" ? (
             <ArticleSkeleton />
           ) : (
-            <PostPageContent post={data} />
+            <div className="flex w-[48rem] flex-col gap-6">
+              <PostPageContent post={data} />
+              <PostPageComments post={data} />
+            </div>
           )}
         </div>
       </Container>
