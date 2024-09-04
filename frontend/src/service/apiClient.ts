@@ -105,6 +105,16 @@ export const createCommentAPI = async ({
   }
 };
 
+export const deleteCommentByIdAPI = async (id: string) => {
+  try {
+    const res = await api.delete(`/comments/delete-comment/${id}`);
+
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
 export const registerAPI = async (
   username: string,
   password: string,
