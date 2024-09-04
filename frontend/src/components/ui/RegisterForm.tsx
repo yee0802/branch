@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { Form } from "@/components/ui/form";
 import { Button, buttonVariants } from "@/components/ui/button";
+import PasswordInput from "./PasswordInput";
 
 const RegisterForm = () => {
   const { registerUser } = useAuth();
@@ -82,7 +83,7 @@ const RegisterForm = () => {
               <FormItem>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" placeholder="*********" />
+                  <PasswordInput {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
