@@ -3,6 +3,7 @@ import { getUserByIdDb } from "../domains/user.domain";
 import { createCommentOnPostDb, getPostByIdDb } from "../domains/post.domain";
 import throwNewError from "../error";
 import { NewCommentData } from "../types/comment.types";
+import { deleteCommentByIdDb } from "../domains/comments.domain";
 
 export const createComment = async (req: Request, res: Response) => {
   try {
@@ -25,6 +26,18 @@ export const createComment = async (req: Request, res: Response) => {
     return res.status(201).send({ comment: newComment });
   } catch (err) {
     console.log("Error creating comment:", err.message);
+    return res.status(err.status ?? 500).send({ error: err.message });
+  }
+};
+
+export const deleteCommentById = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+
+    const deletedComment = await deleteCommentByIdDb(id);
+
+    return res.status(200).send({ comment: deletedComment });
+  } catch (err) {
     return res.status(err.status ?? 500).send({ error: err.message });
   }
 };
