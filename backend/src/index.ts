@@ -18,6 +18,9 @@ app.use("/api/posts", postRouter);
 import userRouter from "./routes/user.route";
 app.use("/api/user", userRouter);
 
+import commentRouter from "./routes/comment.route";
+app.use("/api/comments", commentRouter);
+
 app.all("*", (req, res) => {
   res.status(404).send({
     status: "fail",
