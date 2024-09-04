@@ -41,7 +41,7 @@ const CommentListItem: React.FC<CommentProps> = ({ comment }) => {
 
         <p>{comment.content}</p>
       </div>
-      {user!.id === comment.author.id && (
+      {user?.id === comment.author.id && (
         <div className="absolute right-3">
           <CommentOptionsButton
             comment={comment}
