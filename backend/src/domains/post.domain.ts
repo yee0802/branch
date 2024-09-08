@@ -52,25 +52,6 @@ export const getPostBySlugDb = async (slug: string) =>
           username: true,
         },
       },
-      comments: {
-        select: {
-          id: true,
-          content: true,
-          author: {
-            select: {
-              id: true,
-              email: true,
-              firstName: true,
-              lastName: true,
-              username: true,
-            },
-          },
-          createdAt: true,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-      },
     },
   });
 
