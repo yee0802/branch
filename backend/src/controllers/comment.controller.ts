@@ -3,7 +3,10 @@ import { getUserByIdDb } from "../domains/user.domain";
 import { createCommentOnPostDb, getPostByIdDb } from "../domains/post.domain";
 import throwNewError from "../error";
 import { NewCommentData } from "../types/comment.types";
-import { deleteCommentByIdDb } from "../domains/comments.domain";
+import {
+  deleteCommentByIdDb,
+  getCommentsByPostWithCursorDb,
+} from "../domains/comments.domain";
 
 export const createComment = async (req: Request, res: Response) => {
   try {
@@ -37,6 +40,22 @@ export const deleteCommentById = async (req: Request, res: Response) => {
     const deletedComment = await deleteCommentByIdDb(id);
 
     return res.status(200).send({ comment: deletedComment });
+  } catch (err) {
+    return res.status(err.status ?? 500).send({ error: err.message });
+  }
+};
+
+export const getCommentsByPostWithCursor = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const postId: string = req.params.id;
+    const cursor = req.query.cursor ? String(req.query.cursor) : undefined;
+
+    const commentData = await getCommentsByPostWithCursorDb(postId, cursor);
+
+    return res.status(200).send(commentData);
   } catch (err) {
     return res.status(err.status ?? 500).send({ error: err.message });
   }
