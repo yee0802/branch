@@ -16,7 +16,7 @@ const PostPageComments: React.FC<PostPageCommentsProps> = ({ post }) => {
         <h2 className="text-center text-lg font-bold sm:text-2xl">Comments</h2>
       </div>
       {user && <CreateCommentInput postId={post.id} />}
-      <PostPageCommentsList comments={post.comments} />
+      <PostPageCommentsList postId={post.id} />
     </div>
   );
 };
