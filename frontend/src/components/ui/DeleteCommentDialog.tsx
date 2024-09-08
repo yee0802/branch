@@ -36,7 +36,7 @@ const DeleteCommentDialog: React.FC<DeletePostDialogProps> = ({
     mutationFn: deleteCommentByIdAPI,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["post-page"],
+        queryKey: ["comment-list"],
       });
       toast.success("Deleted Successfully!");
     },

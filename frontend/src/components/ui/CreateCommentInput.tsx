@@ -30,7 +30,7 @@ const CreateCommentInput: React.FC<CreateCommentInputProps> = ({ postId }) => {
   const { mutate } = useMutation({
     mutationFn: createCommentAPI,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["post-page"] });
+      queryClient.invalidateQueries({ queryKey: ["comment-list"] });
       toast.success("Posted Successfully!");
       form.reset();
     },
