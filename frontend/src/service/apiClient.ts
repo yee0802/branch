@@ -82,6 +82,21 @@ export const deletePostByIdAPI = async (id: string) => {
   }
 };
 
+export const getCommentsByPostWithCursorAPI = async (
+  id: string,
+  cursor: unknown,
+) => {
+  try {
+    const res = await api.get(`/posts/${id}/comments`, {
+      params: { cursor },
+    });
+
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
 export const createCommentAPI = async ({
   postId,
   authorId,
