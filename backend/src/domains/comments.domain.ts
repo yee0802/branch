@@ -26,6 +26,7 @@ export const getCommentsByPostWithCursorDb = async (
           id: true,
           email: true,
           firstName: true,
+          avatarURL: true,
           lastName: true,
           username: true,
         },
