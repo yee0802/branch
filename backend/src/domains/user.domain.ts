@@ -20,6 +20,8 @@ export const getUserByUsernameDb = async (username: string) =>
       firstName: true,
       lastName: true,
       username: true,
+      avatarURL: true,
+      bio: true,
       email: true,
       createdAt: true,
       posts: {
