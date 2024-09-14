@@ -91,6 +91,14 @@ const ProfilePage = () => {
                     <EditProfileButton id={data.id} />
                   ) : null}
                 </div>
+                {data.bio && (
+                  <>
+                    <hr />
+                    <div className="overflow-hidden whitespace-pre-line break-words">
+                      <p>{data.bio}</p>
+                    </div>
+                  </>
+                )}
               </div>
 
               <div className="w-full max-w-3xl space-y-5 rounded-lg border bg-card p-5 text-card-foreground shadow-sm">
