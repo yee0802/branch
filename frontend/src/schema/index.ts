@@ -38,6 +38,12 @@ export const EditProfileSchema = z.object({
     .max(15, {
       message: "Must be 15 or less characters long ",
     }),
+  bio: z
+    .string()
+    .min(1, {
+      message: "Must be 1 or more characters long",
+    })
+    .max(200, "Must be 200 or less characters long"),
 });
 
 export const CreatePostSchema = z.object({
