@@ -32,14 +32,22 @@ export const getUserByUsernameAPI = async (username: string) => {
 export const updateUserProfileByIdAPI = async ({
   id,
   data,
+  avatar,
 }: {
   id: string;
   data: unknown;
+  avatar?: string | undefined;
 }) => {
   try {
     const validatedData = EditProfileSchema.parse(data);
 
     const res = await api.patch(`/user/${id}/profile`, validatedData);
+
+    if (avatar) {
+      await api.post(`/user/${id}/profile/upload-avatar`, {
+        imagePath: avatar,
+      });
+    }
 
     return res.data;
   } catch (err) {
