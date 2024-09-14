@@ -26,6 +26,7 @@ import { updateUserProfileByIdAPI } from "@/service/apiClient";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { Textarea } from "./textarea";
 
 type EditProfileButtonProps = {
   id: string;
@@ -39,6 +40,7 @@ const EditProfileButton: React.FC<EditProfileButtonProps> = ({ id }) => {
     defaultValues: {
       firstName: "",
       lastName: "",
+      bio: "",
     },
   });
 
@@ -100,6 +102,26 @@ const EditProfileButton: React.FC<EditProfileButtonProps> = ({ id }) => {
                     <FormLabel htmlFor="lastName">Last Name</FormLabel>
                     <FormControl>
                       <Input {...field} type="lastName" placeholder="Doe" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid items-center gap-4">
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="bio">Bio</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        className="resize-none"
+                        placeholder="Describe yourself"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
