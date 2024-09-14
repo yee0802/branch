@@ -17,7 +17,7 @@ const CommentListItem: React.FC<CommentProps> = ({ comment }) => {
       <span className="hidden sm:inline">
         <Link to={`/users/${comment.author.username}`}>
           <img
-            src={defaultProfileImage}
+            src={comment.author?.avatarURL ?? defaultProfileImage}
             alt="user-profile-image"
             className="mr-4 rounded-full"
             width={40}
