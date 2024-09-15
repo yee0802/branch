@@ -22,3 +22,23 @@ export function formatDate(input: string): string {
     year: "numeric",
   });
 }
+
+export const convertFileToBase64 = (
+  file: File | undefined,
+): Promise<string | undefined> => {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      resolve(undefined);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      resolve(reader.result as string | undefined);
+    };
+    reader.onerror = (err) => {
+      reject(err);
+    };
+  });
+};
