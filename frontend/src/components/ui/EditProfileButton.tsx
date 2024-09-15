@@ -27,13 +27,23 @@ import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Textarea } from "./textarea";
+import { convertFileToBase64 } from "@/lib/utils";
+import { Label } from "./label";
+import defaultAvatar from "@/assets/Default_pfp.jpg";
+import AvatarInput from "./AvatarInput";
+import "cropperjs/dist/cropper.css";
 
 type EditProfileButtonProps = {
   id: string;
+  avatarURL: string | undefined;
 };
 
-const EditProfileButton: React.FC<EditProfileButtonProps> = ({ id }) => {
+const EditProfileButton: React.FC<EditProfileButtonProps> = ({
+  id,
+  avatarURL,
+}) => {
   const [open, setOpen] = useState<boolean>(false);
+  const [croppedAvatar, setCroppedAvatar] = useState<Blob | null>(null);
 
   const form = useForm({
     resolver: zodResolver(EditProfileSchema),
@@ -58,8 +68,23 @@ const EditProfileButton: React.FC<EditProfileButtonProps> = ({ id }) => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof EditProfileSchema>) => {
-    mutate({ id, data });
+  const onSubmit = async (data: z.infer<typeof EditProfileSchema>) => {
+    const newAvatarFile = croppedAvatar
+      ? new File([croppedAvatar], "image.webp", {
+          type: "image/webp",
+        })
+      : undefined;
+
+    const base64avatar = await convertFileToBase64(newAvatarFile);
+
+    mutate(
+      { id, data, avatar: base64avatar ?? undefined },
+      {
+        onSuccess: () => {
+          setCroppedAvatar(null);
+        },
+      },
+    );
     setOpen(false);
   };
 
@@ -75,6 +100,17 @@ const EditProfileButton: React.FC<EditProfileButtonProps> = ({ id }) => {
             Make changes to your profile here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
+        <div className="space-y-1.5">
+          <Label>Avatar</Label>
+          <AvatarInput
+            src={
+              croppedAvatar
+                ? URL.createObjectURL(croppedAvatar)
+                : avatarURL ?? defaultAvatar
+            }
+            onImageCropped={setCroppedAvatar}
+          />
+        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
             <div className="grid items-center gap-4">
