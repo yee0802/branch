@@ -60,7 +60,7 @@ const ProfilePage = () => {
                 <div className="flex flex-col items-center">
                   <img
                     className="rounded-full"
-                    src={defaultProfileImage}
+                    src={data.avatarURL ?? defaultProfileImage}
                     alt="user-profile-image"
                     width={250}
                   />
@@ -87,8 +87,12 @@ const ProfilePage = () => {
                       </span>
                     </div>
                   </div>
+
                   {usernameParam == user.username ? (
-                    <EditProfileButton id={data.id} />
+                    <EditProfileButton
+                      id={data.id}
+                      avatarURL={data.avatarURL}
+                    />
                   ) : null}
                 </div>
                 {data.bio && (
