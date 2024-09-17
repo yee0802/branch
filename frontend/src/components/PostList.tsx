@@ -1,18 +1,24 @@
 import { getAllPostsAPI } from "@/service/apiClient";
 import PostCard from "./ui/PostCard";
-import { Post } from "@/interfaces/Post";
 import PostListSkeleton from "./ui/PostListSkeleton";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import CreatePostButton from "./ui/CreatePostButton";
 import useAuth from "@/hooks/useAuth";
+import { PostsAxiosResponse } from "@/interfaces/PostsAxiosResponse";
+import { Button } from "./ui/button";
 
 const PostList = () => {
   const { user } = useAuth();
 
-  const { data, status } = useQuery<Post[]>({
-    queryKey: ["post-list"],
-    queryFn: () => getAllPostsAPI().then((res) => res.posts),
-  });
+  const { data, status, fetchNextPage, hasNextPage } =
+    useInfiniteQuery<PostsAxiosResponse>({
+      queryKey: ["post-list"],
+      queryFn: ({ pageParam }) => getAllPostsAPI(pageParam),
+      initialPageParam: null as string | null,
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    });
+
+  const posts = data?.pages.flatMap((page) => page.posts) || [];
 
   if (status === "error") {
     return (
@@ -30,15 +36,20 @@ const PostList = () => {
   }
 
   return (
-    <div className="mt-[89px] space-y-4 px-2 md:px-4">
+    <div className="mt-[89px] w-full max-w-2xl space-y-4 px-2 md:px-4">
       {status === "pending" ? (
         <PostListSkeleton />
       ) : (
         <>
           {user && <CreatePostButton />}
-          {data.map((post, idx) => (
+          {posts.map((post, idx) => (
             <PostCard key={idx} post={post} />
           ))}
+          {hasNextPage && (
+            <div className="flex w-full justify-center">
+              <Button onClick={() => fetchNextPage()}>Load More</Button>
+            </div>
+          )}
         </>
       )}
     </div>
