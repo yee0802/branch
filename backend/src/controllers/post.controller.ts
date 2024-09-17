@@ -10,9 +10,16 @@ import { NewPostData } from "../types/post.types";
 import { deleteCommentsOnPostDb } from "../domains/comments.domain";
 
 export const getAllPosts = async (req: Request, res: Response) => {
-  const posts = await getAllPostsDb();
+  try {
+    const cursor = req.query.cursor ? String(req.query.cursor) : undefined;
 
-  return res.status(200).send({ posts: posts });
+    const postData = await getAllPostsDb(cursor);
+
+    return res.status(200).send(postData);
+  } catch (err) {
+    console.log("Error fetching posts:", err.message);
+    return res.status(err.status ?? 500).send({ error: err.message });
+  }
 };
 
 export const getPostBySlug = async (req: Request, res: Response) => {

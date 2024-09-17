@@ -2,8 +2,10 @@ import { NewCommentData } from "../types/comment.types";
 import { NewPostData } from "../types/post.types";
 import prisma from "../utils/prisma";
 
-export const getAllPostsDb = async () =>
-  await prisma.post.findMany({
+export const getAllPostsDb = async (cursor?: string) => {
+  const pageLimit = 5;
+
+  const posts = await prisma.post.findMany({
     select: {
       id: true,
       slug: true,
@@ -24,7 +26,23 @@ export const getAllPostsDb = async () =>
     orderBy: {
       createdAt: "desc",
     },
+    skip: cursor ? 1 : 0,
+    cursor: cursor ? { id: cursor } : undefined,
+    take: pageLimit + 1,
   });
+
+  const hasNextPage = posts.length > pageLimit;
+
+  if (hasNextPage) {
+    posts.pop();
+  }
+
+  return {
+    posts,
+    nextCursor: hasNextPage ? posts[posts.length - 1].id : null,
+    hasNextPage,
+  };
+};
 
 export const getPostByIdDb = async (id: string) =>
   await prisma.post.findUnique({
