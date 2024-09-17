@@ -6,7 +6,8 @@ import EditProfileButton from "./ui/EditProfileButton";
 import { useParams } from "react-router-dom";
 import { getUserByUsernameAPI } from "@/service/apiClient";
 import User from "@/interfaces/User";
-import UserPosts from "./ui/UserPosts";
+import { getPostsByUserIdAPI } from "@/service/apiClient";
+import PostList from "./PostList";
 import { formatDate } from "@/lib/utils";
 import FallbackPage from "./FallbackPage";
 import ProfileSkeleton from "./ui/ProfileSkeleton";
@@ -111,7 +112,11 @@ const ProfilePage = () => {
                 </h2>
               </div>
 
-              <UserPosts posts={data.posts} />
+              <PostList
+                getPosts={(cursor) => getPostsByUserIdAPI(data.id, cursor)}
+                userId={data.id}
+                className="w-full max-w-2xl space-y-4 px-2 md:px-4"
+              />
             </>
           )}
         </div>
