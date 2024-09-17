@@ -1,4 +1,3 @@
-import { getAllPostsAPI } from "@/service/apiClient";
 import PostCard from "./ui/PostCard";
 import PostListSkeleton from "./ui/PostListSkeleton";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -7,13 +6,25 @@ import useAuth from "@/hooks/useAuth";
 import { PostsAxiosResponse } from "@/interfaces/PostsAxiosResponse";
 import { Button } from "./ui/button";
 
-const PostList = () => {
+type PostListProps = {
+  getPosts: (cursor: unknown) => Promise<PostsAxiosResponse>;
+  isMainFeed?: boolean;
+  className?: string;
+  userId?: string;
+};
+
+const PostList: React.FC<PostListProps> = ({
+  getPosts,
+  isMainFeed,
+  userId,
+  className,
+}) => {
   const { user } = useAuth();
 
   const { data, status, fetchNextPage, hasNextPage } =
     useInfiniteQuery<PostsAxiosResponse>({
-      queryKey: ["post-list"],
-      queryFn: ({ pageParam }) => getAllPostsAPI(pageParam),
+      queryKey: userId ? ["user-posts", userId] : ["post-list"],
+      queryFn: ({ pageParam }) => getPosts(pageParam),
       initialPageParam: null as string | null,
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     });
@@ -36,15 +47,19 @@ const PostList = () => {
   }
 
   return (
-    <div className="mt-[89px] w-full max-w-2xl space-y-4 px-2 md:px-4">
+    <div className={className}>
       {status === "pending" ? (
         <PostListSkeleton />
       ) : (
         <>
-          {user && <CreatePostButton />}
-          {posts.map((post, idx) => (
-            <PostCard key={idx} post={post} />
-          ))}
+          {isMainFeed && user && <CreatePostButton />}
+          {posts.length > 0 ? (
+            posts.map((post, idx) => <PostCard key={idx} post={post} />)
+          ) : (
+            <p className="w-full max-w-3xl text-center">
+              {userId ? "This user has no posts" : "No posts available"}
+            </p>
+          )}
           {hasNextPage && (
             <div className="flex w-full justify-center">
               <Button onClick={() => fetchNextPage()}>Load More</Button>
