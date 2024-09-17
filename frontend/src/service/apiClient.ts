@@ -1,5 +1,4 @@
 import api from "@/api/axios";
-import { PostsAxiosResponse } from "@/interfaces/PostsAxiosResponse";
 import { AxiosResponse } from "axios";
 import { handleError } from "./errorHandler";
 import { PostAxiosResponse } from "@/interfaces/PostAxiosResponse";
@@ -7,10 +6,16 @@ import UserAxiosResponse from "@/interfaces/UserAxiosResponse";
 import { CreatePostSchema, EditProfileSchema } from "@/schema";
 import slugify from "slugify";
 
-export const getAllPostsAPI = async (): Promise<PostsAxiosResponse> => {
-  const res: AxiosResponse<PostsAxiosResponse> = await api.get("/posts");
+export const getAllPostsAPI = async (cursor?: unknown) => {
+  try {
+    const res = await api.get("/posts", {
+      params: { cursor },
+    });
 
-  return res.data;
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
 };
 
 export const getPostBySlugAPI = async (
