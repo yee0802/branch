@@ -17,6 +17,20 @@ export const getAllPostsAPI = async (cursor?: unknown) => {
     handleError(err);
   }
 };
+export const getPostsByUserIdAPI = async (
+  userId?: string,
+  cursor?: unknown,
+) => {
+  try {
+    const res = await api.get(`/posts/author/${userId}`, {
+      params: { cursor },
+    });
+
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
 
 export const getPostBySlugAPI = async (
   slug: string,
