@@ -2,10 +2,13 @@ import { NewCommentData } from "../types/comment.types";
 import { NewPostData } from "../types/post.types";
 import prisma from "../utils/prisma";
 
-export const getAllPostsDb = async (cursor?: string) => {
+export const getPostsDb = async (cursor?: string, userId?: string) => {
   const pageLimit = 5;
 
   const posts = await prisma.post.findMany({
+    where: {
+      authorId: userId ?? undefined,
+    },
     select: {
       id: true,
       slug: true,
