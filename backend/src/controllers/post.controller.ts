@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {
   createPostDb,
   deletePostDb,
-  getAllPostsDb,
+  getPostsDb,
   getPostBySlugDb,
 } from "../domains/post.domain";
 import throwNewError from "../error";
@@ -13,11 +13,25 @@ export const getAllPosts = async (req: Request, res: Response) => {
   try {
     const cursor = req.query.cursor ? String(req.query.cursor) : undefined;
 
-    const postData = await getAllPostsDb(cursor);
+    const postData = await getPostsDb(cursor);
 
     return res.status(200).send(postData);
   } catch (err) {
     console.log("Error fetching posts:", err.message);
+    return res.status(err.status ?? 500).send({ error: err.message });
+  }
+};
+
+export const getPostsByUserId = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.id;
+    const cursor = req.query.cursor ? String(req.query.cursor) : undefined;
+
+    const postData = await getPostsDb(cursor, userId);
+
+    return res.status(200).send(postData);
+  } catch (err) {
+    console.log("Error fetching posts by user ID:", err.message);
     return res.status(err.status ?? 500).send({ error: err.message });
   }
 };
