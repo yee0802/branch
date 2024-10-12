@@ -11,6 +11,9 @@ const userData: Prisma.UserCreateInput[] = [
     password: "password123",
     firstName: "Stella",
     lastName: "Andrews",
+    avatarURL:
+      "https://res.cloudinary.com/dpqhn9i37/image/upload/v1728743143/avatar_stargazer_pnawm3.webp",
+    bio: "I'm an astronomer and explorer of the cosmos. Stargazing fuels my curiosity, and I love sharing discoveries about the mysteries of the universe.",
     posts: {
       create: [
         {
@@ -39,6 +42,9 @@ const userData: Prisma.UserCreateInput[] = [
     password: "password123",
     firstName: "Maxwell",
     lastName: "Hunter",
+    avatarURL:
+      "https://res.cloudinary.com/dpqhn9i37/image/upload/v1728742116/avatar_adventureseeker_ztnrle.webp",
+    bio: "I'm an adventurer and archaeologist on a quest to uncover ancient civilizations and reveal their secrets to the modern world.",
     posts: {
       create: [
         {
@@ -58,6 +64,9 @@ const userData: Prisma.UserCreateInput[] = [
     password: "password123",
     firstName: "Elena",
     lastName: "Ramirez",
+    avatarURL:
+      "https://res.cloudinary.com/dpqhn9i37/image/upload/v1728743140/avatar_mysterysolver_cfjcc5.webp",
+    bio: "I'm a researcher fascinated by the enigma of time travel. Exploring theories and pushing the boundaries of science keeps me curious.",
     posts: {
       create: [
         {
@@ -77,6 +86,9 @@ const userData: Prisma.UserCreateInput[] = [
     password: "password123",
     firstName: "Christopher",
     lastName: "Park",
+    avatarURL:
+      "https://res.cloudinary.com/dpqhn9i37/image/upload/v1728743132/avatar_explorer24_stymdw.webp",
+    bio: "I'm an explorer driven by a passion for uncovering the hidden mysteries of uncharted places. Every journey reveals something new, sparking my curiosity to delve even deeper into the unknown.",
     posts: {
       create: [
         {
@@ -96,6 +108,9 @@ const userData: Prisma.UserCreateInput[] = [
     password: "password123",
     firstName: "Ken",
     lastName: "Chang",
+    avatarURL:
+      "https://res.cloudinary.com/dpqhn9i37/image/upload/v1728743146/avatar_techlover99_pkjzao.webp",
+    bio: "I'm a tech enthusiast fascinated by the rise of virtual reality. I love experimenting with VR applications to see how they'll shape our future.",
     posts: {
       create: [
         {
