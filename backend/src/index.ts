@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3030;
 
 const app = express();
 app.disable("x-powered-by");
@@ -31,5 +31,7 @@ app.all("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`\n Server is running on http://localhost:${PORT}\n`);
+  console.log(`\n Server is running on ${PORT}\n`);
 });
+
+export default app;
